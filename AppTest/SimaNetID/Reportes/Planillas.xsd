@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Planillas" targetNamespace="http://tempuri.org/Planillas.xsd" xmlns:mstns="http://tempuri.org/Planillas.xsd" xmlns="http://tempuri.org/Planillas.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Planillas" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="Planillas" msprop:Generator_UserDSName="Planillas">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Planilla" msprop:Generator_TableClassName="PlanillaDataTable" msprop:Generator_TableVarName="tablePlanilla" msprop:Generator_TablePropName="Planilla" msprop:Generator_RowDeletingName="PlanillaRowDeleting" msprop:Generator_RowChangingName="PlanillaRowChanging" msprop:Generator_RowEvHandlerName="PlanillaRowChangeEventHandler" msprop:Generator_RowDeletedName="PlanillaRowDeleted" msprop:Generator_UserTableName="Planilla" msprop:Generator_RowChangedName="PlanillaRowChanged" msprop:Generator_RowEvArgName="PlanillaRowChangeEvent" msprop:Generator_RowClassName="PlanillaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CONFORM" msprop:Generator_ColumnVarNameInTable="columnCONFORM" msprop:Generator_ColumnPropNameInRow="CONFORM" msprop:Generator_ColumnPropNameInTable="CONFORMColumn" msprop:Generator_UserColumnName="CONFORM" type="xs:string" minOccurs="0" />
+              <xs:element name="cod_tra" msprop:Generator_ColumnVarNameInTable="columncod_tra" msprop:Generator_ColumnPropNameInRow="cod_tra" msprop:Generator_ColumnPropNameInTable="cod_traColumn" msprop:Generator_UserColumnName="cod_tra" type="xs:string" minOccurs="0" />
+              <xs:element name="nombre" msprop:Generator_ColumnVarNameInTable="columnnombre" msprop:Generator_ColumnPropNameInRow="nombre" msprop:Generator_ColumnPropNameInTable="nombreColumn" msprop:Generator_UserColumnName="nombre" type="xs:string" minOccurs="0" />
+              <xs:element name="Especialidad_t" msprop:Generator_ColumnVarNameInTable="columnEspecialidad_t" msprop:Generator_ColumnPropNameInRow="Especialidad_t" msprop:Generator_ColumnPropNameInTable="Especialidad_tColumn" msprop:Generator_UserColumnName="Especialidad_t" type="xs:string" minOccurs="0" />
+              <xs:element name="trabajo" msprop:Generator_ColumnVarNameInTable="columntrabajo" msprop:Generator_ColumnPropNameInRow="trabajo" msprop:Generator_ColumnPropNameInTable="trabajoColumn" msprop:Generator_UserColumnName="trabajo" type="xs:string" minOccurs="0" />
+              <xs:element name="ot" msprop:Generator_ColumnVarNameInTable="columnot" msprop:Generator_ColumnPropNameInRow="ot" msprop:Generator_ColumnPropNameInTable="otColumn" msprop:Generator_UserColumnName="ot" type="xs:string" minOccurs="0" />
+              <xs:element name="atv_crv" msprop:Generator_ColumnVarNameInTable="columnatv_crv" msprop:Generator_ColumnPropNameInRow="atv_crv" msprop:Generator_ColumnPropNameInTable="atv_crvColumn" msprop:Generator_UserColumnName="atv_crv" type="xs:string" minOccurs="0" />
+              <xs:element name="DET_LAB" msprop:Generator_ColumnVarNameInTable="columnDET_LAB" msprop:Generator_ColumnPropNameInRow="DET_LAB" msprop:Generator_ColumnPropNameInTable="DET_LABColumn" msprop:Generator_UserColumnName="DET_LAB" type="xs:string" minOccurs="0" />
+              <xs:element name="COD_ESPE_REQUE" msprop:Generator_ColumnVarNameInTable="columnCOD_ESPE_REQUE" msprop:Generator_ColumnPropNameInRow="COD_ESPE_REQUE" msprop:Generator_ColumnPropNameInTable="COD_ESPE_REQUEColumn" msprop:Generator_UserColumnName="COD_ESPE_REQUE" type="xs:string" minOccurs="0" />
+              <xs:element name="Especialidad_requerida" msprop:Generator_ColumnVarNameInTable="columnEspecialidad_requerida" msprop:Generator_ColumnPropNameInRow="Especialidad_requerida" msprop:Generator_ColumnPropNameInTable="Especialidad_requeridaColumn" msprop:Generator_UserColumnName="Especialidad_requerida" type="xs:string" minOccurs="0" />
+              <xs:element name="modalidad" msprop:Generator_ColumnVarNameInTable="columnmodalidad" msprop:Generator_ColumnPropNameInRow="modalidad" msprop:Generator_ColumnPropNameInTable="modalidadColumn" msprop:Generator_UserColumnName="modalidad" type="xs:string" minOccurs="0" />
+              <xs:element name="CNT_HR" msprop:Generator_ColumnVarNameInTable="columnCNT_HR" msprop:Generator_ColumnPropNameInRow="CNT_HR" msprop:Generator_ColumnPropNameInTable="CNT_HRColumn" msprop:Generator_UserColumnName="CNT_HR" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

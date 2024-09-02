@@ -1,0 +1,10 @@
+
+**** Log file opened at 2023-11-24 08:08:50.561945 UTC-05:00 (Hora est. PacÃ­fico, SudamÃ©rica), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 7, Compiled on Sep 19 2020 01:34:20
+ CPIC library: 753.2020.09.14 version 3, NI library: 40, Kernel Release: 753 Patch Level 711
+ Current working directory: C:\ProyectosNet\Reportes\Calidad, Program: crw64
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 158 Step 13), Operating_system: Windows NT 10.0
+ Hostname: SPEDAROSALESA, IP address: 192.168.56.1, IPv6 address: fe80::c92c:a370:ba0b:1f1d
+
+2023-11-24 08:08:50.564203 [03540] >> Info entry
+	Did not find config file C:\ProyectosNet\Reportes\Calidad\sapnwrfc.ini.

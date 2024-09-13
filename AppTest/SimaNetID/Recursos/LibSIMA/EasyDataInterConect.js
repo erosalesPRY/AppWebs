@@ -53,7 +53,21 @@ EasyDataResult = function (EasyDataInterConect) {
     var KEYQTIPO_RETORNO = "TipReturn";
     var oEasyDataInterConect = EasyDataInterConect;
     this.getDataTable = function () {
-        return this.get("Table");
+        var dtBase = new SIMA.Data.DataTable();
+        var oDataTable = new SIMA.Data.DataTable();
+        try {
+            dtBase = this.get("Table");
+            if (dtBase == null) {
+                oDataTable.Rows.Count = function () { return 0 };
+            }
+            else {
+                oDataTable = dtBase;
+            }
+        }
+        catch (error) {
+            alert(error);
+        }
+        return oDataTable;
     }
     this.getEntity = function () {
         return this.get("Entity");

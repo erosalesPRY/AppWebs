@@ -1727,16 +1727,34 @@ var Caracter = {
     , Amperson: "&"
     , Interogacion: "?"
 }
+function UndoUsing(opt) {
+        var head = document.getElementsByTagName('head').item(0).children;
+        var arrScript = Array.prototype.slice.call(head, 0);
+    arrScript.forEach(function (scriptId, i) {
+       /*  if (((scriptId.tagName.toUpperCase() == "SCRIPT") || (scriptId.tagName.toUpperCase() == "STYLE")) && (scriptId.id.indexOf(opt.Prefijo))) {
+        //    alert(scriptId.id + ' -  ' + ' - ' + opt.Prefijo + ' - ' +scriptId.id.indexOf(opt.Prefijo));
+           if (scriptId.id.indexOf(opt.Prefijo)) {
+                head.removeChild(scriptId);
+            }
+        }*/
+            
+        });
+ }
+
 function Using(file, opt) {
 
     if (file == "") return;
 
     //Genera una id para el archivo con el fin de evitar que se cargue 2 veces.
-    idfile = file.replace(location.hostname, "");
+    /*idfile = file.replace(location.hostname, "");
     idfile = idfile.replace(location.protocol, "");
-    idfile = idfile.replace("//", "");
-    
-    if (document.getElementById(idfile)) { return };
+    idfile = idfile.replace("//", "");*/
+
+    idfile = opt.Prefijo + '-' + opt.Id;
+
+    if (document.getElementById(idfile)) {
+            return;
+    };
 
     if (typeof opt == "undefined") opt = {};
     if (typeof opt.cache == "undefined") opt.cache = true;

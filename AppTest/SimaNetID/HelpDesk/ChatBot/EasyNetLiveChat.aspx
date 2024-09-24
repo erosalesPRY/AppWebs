@@ -157,35 +157,13 @@
 
                              </div>
                          </div>
-                         <div class="chat-area-footer">
-                                 <svg xmlns = "http://www.w3.org/2000/svg" viewBox = "0 0 24 24" fill = "none" stroke = "currentColor" stroke-width="1.5" stroke - linecap="round" stroke - linejoin="round" class="feather feather-video" >
-                                         <path d="M23 7l-7 5 7 5V7z" />
-                                         <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
-                                 </svg>
-                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image">
-                                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                                     <circle cx="8.5" cy="8.5" r="1.5" />
-                                     <path d="M21 15l-5-5L5 21" />
-                                 </svg>
-                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle">
-                                     <circle cx="12" cy="12" r="10" />
-                                     <path d="M12 8v8M8 12h8" />
-                                 </svg>
-                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-paperclip">
-                                      <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48" />
-                                 </svg>
-                                 <input type="text" placeholder="Escribe un mensaje aquí..." style="border-width:1px;  border-style: dotted;border-color: gray;"  onkeydown="EasyNetLiveChat.InputMensaje(this);"/>
-                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile">
-                                     <circle cx="12" cy="12" r="10" />
-                                     <path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01" />
-                                 </svg>
-                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up">
-                                     <path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3" />
-                                 </svg>
+                         <div id="ChatFooter" class="chat-area-footer">
+                              
                          </div> 
-                         <div>  
-                         </div>
-                         </div>
+
+                        <div>  
+                    </div>
+                </div>
 
      
        
@@ -194,12 +172,33 @@
 </body>
 
      <script>
+         var btns = [
+                      ['Left',true,'<svg xmlns = "http://www.w3.org/2000/svg" viewBox = "0 0 24 24" fill = "none" stroke = "currentColor" stroke-width="1.5" stroke - linecap="round" stroke - linejoin="round" class="feather feather-video"><path d = "M23 7l-7 5 7 5V7z" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>']
+                     , ['Left', true,'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x = "3" y = "3" width = "18" height = "18" rx = "2" ry = "2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="M21 15l-5-5L5 21"/></svg>']
+                     , ['Left', true,'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle">< circle cx = "12" cy = "12" r = "10" /><path d="M12 8v8M8 12h8"/></svg>']
+                     , ['Left', true,'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-paperclip">< path d = "M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>']
+                     , ['Center', true,'<input type="text" placeholder="Escribe un mensaje aquí..." style="border-width:1px;  border-style: dotted;border-color: gray;" onkeydown="EasyNetLiveChat.InputMensaje(this);"/>']
+                     , ['Rigth', true,'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile"><circle cx = "12" cy = "12" r = "10" /><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>']
+                     , ['Rigth', false,'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d = "M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg>']
+                   ];
+
+        
+       /*  
+         btns.forEach((score, i) => {
+
+             alert(score[0] + ' - ' + score[1] + ' - ' + i);
+         });
+
+         */
+
+         
+
          var oContactoDestinoBE = null;
 
          var oContactoSendDestinoSeleccionadoBE = null;
          var cmll = "\"";
-         EasyNetLiveChat.PathUrlServiceChat = "http://localhost:1000/Core/HelpDesk/ChatBot/IChatBotManager.asmx";
-         //EasyNetLiveChat.PathUrlServiceChat = ConnectedService.PathNetCore + "/HelpDesk/ChatBox/ICharBoxManager.asmx";
+         EasyNetLiveChat.PathUrlServiceChat = ConnectedService.PathNetCore + "HelpDesk/ChatBot/IChatBotManager.asmx";
+
          EasyNetLiveChat.FotoContacto = function (NroDocumento) {
              return GlobalEntorno.PathFotosPersonal + NroDocumento + ".jpg";
          }
@@ -210,9 +209,28 @@
          EasyNetLiveChat.Panel.Contactos = {};
          EasyNetLiveChat.Panel.Contactos.Right = function(){return jNet.get('LstContact');}
          EasyNetLiveChat.Panel.Contactos.Left = function () { return jNet.get('LblContact'); }
-         EasyNetLiveChat.Panel.Body = function () {return jNet.get('ContentChat');}
+         EasyNetLiveChat.Panel.Body = function () { return jNet.get('ContentChat'); }
+         EasyNetLiveChat.Panel.Footer = function () { return jNet.get('ChatFooter'); }
 
-         
+         EasyNetLiveChat.Panel.Footer.Controls = [
+                                                    ['Left', false, '<svg xmlns = "http://www.w3.org/2000/svg" viewBox = "0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video"><path d = "M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>']
+                                                  , ['Left', false, '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x = "3" y = "3" width = "18" height = "18" rx = "2" ry = "2" /><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>']
+                                                  , ['Left', true, '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>']
+                                                  , ['Left', true, '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-paperclip"><path d = "M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>']
+                                                  , ['Center', true, '<input type="text" placeholder="Escribe un mensaje aquí..." style="border-width:1px;  border-style: dotted;border-color: gray;" onkeydown="EasyNetLiveChat.InputMensaje(this);"/>']
+                                                  , ['Rigth', true, '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile"><circle cx = "12" cy = "12" r = "10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>']
+                                                  , ['Rigth', true, '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d = "M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg>']
+                                                 ];
+         EasyNetLiveChat.Panel.Footer.Controls.Load = function () {
+             var _Footer = EasyNetLiveChat.Panel.Footer();
+             EasyNetLiveChat.Panel.Footer.Controls.forEach((btn, i) => {
+                 if (btn[1] == true) {
+                     _Footer.innerHTML += btn[2];
+                 }
+             });
+         }
+         EasyNetLiveChat.Panel.Footer.Controls.Load();
+
 
          EasyNetLiveChat.ItemplateContactos = function (ul, item) {
              var Foto = ((item.ISGRUPO == 1) ? item.FOTO_GRUPO : EasyNetLiveChat.FotoContacto(item.NRODOCUMENTO)); 
@@ -298,9 +316,9 @@
                          EasyNetLiveChat.Render.ChatHistoryDialogo(UsuarioBE.IdContacto, oContactoBE.IdContacto);//Verifica los Mensaje recibidos al grupo (ContactoBE) del usuario(UsuarioBE-Usuario logueado)
                      }
 
-                     alert("Usuario de Grupo " + oContactoBE.Tipo + UsuarioBE.IdContacto);
+                     //alert("Usuario de Grupo " + oContactoBE.Tipo + UsuarioBE.IdContacto);
 
-                     aler();
+                     //aler();
                     /* NetSuite.LiveChat.WndPopupIface.Task.Excecute('Load historial chat..', function () {
                          EasyNetLiveChat.Render.ChatHistoryDialogo(UsuarioBE.IdContacto, oContactoBE.IdContacto);
 
@@ -317,14 +335,12 @@
 
          EasyNetLiveChat.OnItemSelected = function (value, ItemBE) {
              EasyNetLiveChat.Panel.Contactos.Right().clear();
-             //Registra Libreria
+             //Registra Libreria según el  servio implementado
              var PathChatBoxService = Page.Request.ApplicationPath + "/Recursos/LibSIMA/ChatBotServiceBroker/" + ItemBE.LIB_JS_SRVBROKER.toString().Replace(" ", "");
              var options = { dom: true, Prefijo: 'Helpdesk', Id: ItemBE.ID_CONTACT };
              UndoUsing(options);
 
              Using(PathChatBoxService, options);
-
-
 
              //Datos del Contacto Destino
             // oContactoBE = ItemBE;//Contacto destio seleccionado
@@ -651,7 +667,7 @@
 
                              MensajeContenidoBE.IdMsg = oMensajeBE.IdMsg;
                              MensajeContenidoBE.IdContenido = jSonBE.OutIdContenido;
-
+                             //aler();
                              break;
                          case EasyNetLiveChat.Enum.Modalidad.GrupoDestino:
                          default:

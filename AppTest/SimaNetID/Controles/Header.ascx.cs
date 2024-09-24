@@ -15,8 +15,9 @@ using Org.BouncyCastle.Asn1.Pkcs;
 using SIMANET_W22R;
 using SIMANET_W22R.Exceptiones;
 using SIMANET_W22R.HelpDesk;
-using SIMANET_W22R.HelpDesk.ChatBox;
+using SIMANET_W22R.HelpDesk.ChatBot;
 using static System.Net.WebRequestMethods;
+using static EasyControlWeb.EasyUtilitario.Enumerados;
 
 namespace SIMANET_W22R.Controles
 {
@@ -167,7 +168,7 @@ namespace SIMANET_W22R.Controles
                 oEasyNavigatorBarIconBE.fa_icon = "fa fa-bell-o";
                 oEasyNavigatorBarIconBE.Text = "Alerta";
                 //oEasyNavigatorBarIconBE.call_fcScript = "NetSuite.LiveChat.Show('ChatRoom');"; 
-                oEasyNavigatorBarIconBE.call_fcScript = "LoadLiveChat();";
+                oEasyNavigatorBarIconBE.call_fcScript = "LiveChat_OnLoad();";
                 EasyNavigatorBarMenu1.OptionsIcon.Add(oEasyNavigatorBarIconBE);
 
 
@@ -177,6 +178,12 @@ namespace SIMANET_W22R.Controles
                 oEasyNavigatorBarIconBE.Text = "SnapShot";
                 oEasyNavigatorBarIconBE.call_fcScript = "SnapShotFlash();";
                 EasyNavigatorBarMenu1.OptionsIcon.Add(oEasyNavigatorBarIconBE);
+
+               /* oEasyNavigatorBarIconBE = new EasyNavigatorBarIconBE();
+                oEasyNavigatorBarIconBE.fa_icon = "../../Recursos/img/Infinity.gif";
+                oEasyNavigatorBarIconBE.Text = "";
+                oEasyNavigatorBarIconBE.TipoImg =true;
+                EasyNavigatorBarMenu1.OptionsIcon.Add(oEasyNavigatorBarIconBE);*/
 
                 /*Establece la funcion Script para las opsciones de menu del sistema*/
                 EasyNavigatorBarMenu1.fc_OnMenuItem_Click = NombreFuncion;
@@ -206,21 +213,91 @@ namespace SIMANET_W22R.Controles
                                             +'<path d=" + cmll + "M330.518 131.099l-213.825 130.08c-7.387 4.494-5.74 15.711 2.656 17.97l72.009 19.374a9.88 9.88 0 007.703-1.094l32.882-20.003-10.113 37.136a9.88 9.88 0 001.083 7.704l38.561 63.826c4.488 7.427 15.726 5.936 18.003-2.425l65.764-241.49c2.337-8.582-7.092-15.72-14.723-11.078zM266.44 356.177l-24.415-40.411 15.544-57.074c2.336-8.581-7.093-15.719-14.723-11.078l-50.536 30.744-45.592-12.266L319.616 160.91 266.44 356.177z"+ cmll + " fill =" + cmll +"#fff" + cmll + @"/>'
                                         +'</svg>'
                                     +'</div>'
-                                    +'  <div style= " + cmll + "padding-left:20px;" +cmll + @">  NetSuiteChat</div>'
+                                    +'  <div style= " + cmll + "padding-left:20px;" +cmll + @">  NetSuiteChatBots</div>'
                                     +'</div>'";
 
                 string ScriptLiveChat = @"<script>
-                                                 function LoadLiveChat() {
-                                                    var urlPag = Page.Request.ApplicationPath + '/HelpDesk/ChatBox/EasyNetLiveChat.aspx';
-                                                    var oColletionParams = new SIMA.ParamCollections();
-                                                            var oParam = new SIMA.Param('QLlama', GlobalEntorno.PageName);
-                                                                oColletionParams.Add(oParam);
-                                                             " + EasyPopupLiveChat.ClientID + @".Titulo=" + Iconochat + @" ;
-                                                             " + EasyPopupLiveChat.ClientID + @".Load(urlPag, oColletionParams, false);
+                                                 function LiveChat_OnLoad () {
+                                                    //Verifica si existe servicio de Listener
+                                                    if(NetSuite.Manager.Infinity.User.Contectado==false){
+                                                        var msgConfig = { Titulo: 'Advertencia', Descripcion: 'Listener SIMA NetSuiteSocket no se enceuentra activo'};
+                                                        var oMsg = new SIMA.MessageBox(msgConfig);
+                                                        oMsg.Alert();
+                                                        return
+                                                    }
+                                                    if(UsuarioBE.CodPersonal.toString().length==0){
+                                                        var msgConfig = { Titulo: 'Advertencia', Descripcion: 'Maestro de personal SIMANET, Usuario no tiene asociado el código de personal del Mod O7 Solutions'};
+                                                        var oMsg = new SIMA.MessageBox(msgConfig);
+                                                        oMsg.Alert();
+                                                        return
+                                                    }
 
+                                                    if(UsuarioBE.IdContacto=='0'){
+                                                        var oContactBE = new NetSuite.LiveChat.ContactBE();
+                                                            oContactBE.IdContacto = 0;
+                                                            oContactBE.Foto = '';
+                                                            oContactBE.Nombre = '';
+                                                            oContactBE.Tipo=0;
+                                                            oContactBE.CodPersonal=UsuarioBE.CodPersonal;
+
+                                                        var oParamCollections = new SIMA.ParamCollections();
+                                                        var oParam = new SIMA.Param('IdContacto', oContactBE.IdContacto, TipodeDato.Int);
+                                                            oParamCollections.Add(oParam);
+                                                            oParam = new SIMA.Param('IsGrupo', oContactBE.Tipo, TipodeDato.Int);
+                                                            oParamCollections.Add(oParam);
+                                                            oParam = new SIMA.Param('NombreGrupo',oContactBE.Nombre);
+                                                            oParamCollections.Add(oParam);
+                                                            oParam = new SIMA.Param('FotoGrupo', oContactBE.Foto);
+                                                            oParamCollections.Add(oParam);
+                                                            oParam = new SIMA.Param('LIB_JS_SRVBROKER', '');
+                                                            oParamCollections.Add(oParam);
+                                                            oParam = new SIMA.Param('Descripcion', '');
+                                                            oParamCollections.Add(oParam);
+                                                            oParam = new SIMA.Param('CodPersonal',  oContactBE.CodPersonal);
+                                                            oParamCollections.Add(oParam);
+                                                            oParam = new SIMA.Param('IdUsuario', UsuarioBE.IdUsuario, TipodeDato.Int);
+                                                            oParamCollections.Add(oParam);
+
+                                                        var oEasyDataInterConect = new EasyDataInterConect();
+                                                             oEasyDataInterConect.MetododeConexion = ModoInterConect.WebServiceExterno;
+                                                             oEasyDataInterConect.UrlWebService = ConnectedService.PathNetCore + 'HelpDesk/ChatBot/IChatBotManager.asmx'; 
+                                                             oEasyDataInterConect.Metodo = 'IRegistrarContactoyGrupo';
+                                                             oEasyDataInterConect.ParamsCollection = oParamCollections;
+
+                                                        var oEasyDataResult = new EasyDataResult(oEasyDataInterConect);
+                                                        var objResultBE=oEasyDataResult.sendData().toString().SerializedToObject();
+                                                        UsuarioBE.IdContacto=objResultBE.IDCONTACTO
+
+                                                    }
+                                                    
+                                                    var urlPag = Page.Request.ApplicationPath + '/HelpDesk/ChatBot/EasyNetLiveChat.aspx';
+                                                    var oColletionParams = new SIMA.ParamCollections();
+                                                    var oParam = new SIMA.Param('QLlama', GlobalEntorno.PageName);
+                                                        oColletionParams.Add(oParam);
+                                                        " + EasyPopupLiveChat.ClientID + @".Titulo=" + Iconochat + @" ;
+                                                        " + EasyPopupLiveChat.ClientID + @".Load(urlPag, oColletionParams, false);
+                                                        NetSuite.LiveChat.WndPopupIface =jNet.get('" + EasyPopupLiveChat.ClientID + @"');
+                                                        NetSuite.Manager.Infinity.InterfaceLoad=true;
+                                                    
+                                                }
+
+                                                function LiveChat_OnClose(){
+                                                    NetSuite.Manager.Infinity.InterfaceLoad=true;
+                                                }
+
+                                                //Implementacones para el control de socket chatbot
+                                                window.onload=function(){
+                                                    window.ClosePorApp=false;
+                                                }
+                                                window.onbeforeunload = function(evt){
+                                                        if(window.ClosePorApp){
+                                                            NetSuite.LiveChat.close();//Cierra la conexion con el Listener NetSuiteWebSocket
                                                         }
-                                            </script>";
-                Page.RegisterClientScriptBlock("IconMsg", ScriptLiveChat);
+
+                                                }
+
+                                         </script>";
+                Page.RegisterClientScriptBlock("IconMsg1", ScriptLiveChat);
 
 
 
@@ -346,6 +423,7 @@ namespace SIMANET_W22R.Controles
                                                 LoadConfigMaster();
                                             break;
                                         case 'Key4':
+                                            window.ClosePorApp=true;//Indica que la ventana se esta cerrando correctamente mediante el aplicativo en caso sea falso  es un cierre abrupto
                                             Page.Response.redirect('" + PaginaLogin + @"');
                                         break;
                                     

@@ -309,5 +309,5 @@ strong {
     <cc1:EasyPopupBase ID="EasyPopupMasrteConfig" runat="server"  Modal="fullscreen" ModoContenedor="LoadPage" Titulo="Configuraciones" RunatServer="false" DisplayButtons="true" fncScriptAceptar="MasterConfig.OnAceptar" >
     </cc1:EasyPopupBase>    
 
-    <cc1:EasyPopupBase ID="EasyPopupLiveChat" runat="server"  Modal="Medio" ModoContenedor="LoadPage" Titulo="ChatApp" RunatServer="false" DisplayButtons="true" >
+    <cc1:EasyPopupBase ID="EasyPopupLiveChat" runat="server"  Modal="Medio" ModoContenedor="LoadPage" Titulo="ChatApp" RunatServer="false" DisplayButtons="true" fncScriptAceptar="return true;" fncScriptOnClose="LiveChat_OnClose" >
     </cc1:EasyPopupBase>    

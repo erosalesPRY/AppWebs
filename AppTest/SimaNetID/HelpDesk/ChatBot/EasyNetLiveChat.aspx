@@ -18,7 +18,7 @@
   height: 10px;
   border-radius: 50%;
   background-color: red;
-   border: 2px solid white;
+  border: 2px solid white;
   bottom: 0;
   /*right: 0;*/
   left:10;
@@ -115,6 +115,23 @@
 </script>
 
 
+<style>
+    .Brokeroverlay{    
+        height: 90%;
+        width: 0;
+        position: fixed; 
+        z-index: 1; 
+        left: 100%;
+        top: 70px;
+        background-color: white; 
+        background-image: url("../../Recursos/img/HeaderChat.png");
+        background-repeat: no-repeat;
+        overflow-x: hidden; 
+        transition: 1s; 
+        color:blue;
+    }       
+</style>
+
 </head>
 <body style="width:80%;background-color: coral;">
     <form id="form1" runat="server" >         
@@ -124,7 +141,7 @@
                                         <cc3:EasyAutocompletar ID="EasyAcFindContacto" Width="100%" runat="server" NroCarIni="1"  DisplayText="NOMBRECONTACTO" ValueField="ID_CONTACT" fnOnSelected="EasyNetLiveChat.OnItemSelected" fncTempaleCustom="EasyNetLiveChat.ItemplateContactos">
                                             <EasyStyle Ancho="Dos"></EasyStyle>
                                             <DataInterconect MetodoConexion="WebServiceExterno">
-                                                <UrlWebService>http://localhost:1000/Core/HelpDesk/ChatBot/IChatBotManager.asmx</UrlWebService>
+                                                <UrlWebService>http:</UrlWebService>
                                                 <Metodo>ListarContatos</Metodo>
                                                 <UrlWebServicieParams>
                                                     <cc2:EasyFiltroParamURLws  ParamName="UserName" Paramvalue="UserName" ObtenerValor="Session" />
@@ -161,11 +178,26 @@
                               
                          </div> 
 
+                            <!--Init IBroker Service*******************************************************************************************-->
+                            <div  id="BrokerWind" class="Brokeroverlay ">
+                                <!-- Button to close the overlay navigation -->
+                                <a href="javascript:void(0)" class="closebtn" onclick="NetSuite.Manager.Broker.Persiana.Close()">&times;</a>
+                                <!-- Overlay content -->
+                                <div id="BrokerContent" class="overlay-content">
+                                    <h1>Aqui estaran las opciones de tu servicio</h1>
+
+                                </div>
+                            </div> 
+                            <!--End IBroker Service*********************************************************************************************-->
+
+
                         <div>  
                     </div>
                 </div>
 
      
+
+
        
         
     </form>
@@ -353,7 +385,6 @@
              EasyNetLiveChat.Panel.Contactos.Left().clear();
              EasyNetLiveChat.Panel.Contactos.Left().innerHTML = EasyNetLiveChat.ITemplateInfoContacto(oContactoDestinoBE);
              EasyNetLiveChat.Panel.Contactos.Right().clear();
-             
 
              NetSuite.LiveChat.WndPopupIface.Task.Excecute('Load historial chat..', function () {
                  if (EasyNetLiveChat.Data.VerificarPertenezcoAlGrupo(value)) {
@@ -363,6 +394,15 @@
                  else {
                      EasyNetLiveChat.Render.MiembrosdeGrupoSeleccionado(oContactoDestinoBE);
                  }
+                 //Actualiza Estado
+                 var ContactosBE = [].slice.call(EasyNetLiveChat.Panel.Contactos.Right().children);
+                 ContactosBE.forEach(function (CtrlContacto) {
+                     var oImgContacto = CtrlContacto.children[0];
+                     var oContactoBE = jNet.get(oImgContacto).attr("Data").toString().SerializedToObject();
+                     var oHtmlStatus = jNet.get(CtrlContacto.children[1]);
+                     oHtmlStatus.css('background-color', oContactoBE.ColorEstado);
+                 });
+
 
                  EasyNetLiveChat.Render.ChatHistoryDialogo(UsuarioBE.IdContacto, oContactoDestinoBE.IdContacto);
              });
@@ -378,10 +418,11 @@
              var ContactSendBE = new NetSuite.LiveChat.ContactBE();
                  ContactSendBE.IdContacto = oDR.ID_CONTACT_ORG;
                  ContactSendBE.Nombre = oDR.NOMBRECONTACTO;
+
+
                  ContactSendBE.Foto = EasyNetLiveChat.FotoContacto(oDR.NRODOCUMENTO);
                  ContactSendBE.EMail = oDR.EMAIL;
                  //Verificar si los usuarios estan conectados
-                 //EasyNetLiveChat.Panel.Contactos.Right().innerHTML += EasyNetLiveChat.ITemplateLstUsuarioContacto("UsuSend", ContactSendBE);
                  EasyNetLiveChat.Panel.Contactos.Right().innerHTML += EasyNetLiveChat.ITemplateLstUsuarioContacto(EasyNetLiveChat.Enum.Modalidad.ContactDestino, ContactSendBE);
                     Cant = i;
                 });
@@ -395,6 +436,11 @@
                  EasyNetLiveChat.Data.LstMiembroGrupoSeleccionado(_ContactoDestinoBE.IdContacto).Rows.forEach(function (oDR, i) {
                      //Verificar si los usuarios estan conectados
                      var oContactBE = new NetSuite.LiveChat.ContactBE();
+                     oContactBE.IdContacto = oDR.ID_CONTACT;
+                     oContactBE.IdMiembro = oDR.ID_MIEMBRO;
+                     oContactBE.CodPersonal = oDR.IDPERSONAL;
+                     oContactBE.IdEstado = oDR.IDESTCHAT;
+                     oContactBE.ColorEstado = oDR.COLORESTADO;
                      oContactBE.Foto = EasyNetLiveChat.FotoContacto(oDR.NRODOCUMENTO);;
                      oContactBE.Nombre = oDR.APELLIDOSYNOMBRES;
                      EasyNetLiveChat.Panel.Contactos.Right().innerHTML += EasyNetLiveChat.ITemplateLstUsuarioContacto("Grupo", oContactBE);
@@ -582,27 +628,6 @@
              });
              return CollectionMsgContenido;
          }
-
-         /*
-         EasyNetLiveChat.HtmlChatContenido = function (oContenidoBE) {
-             var cmll = "\"";
-             var strBE = "";
-             var htmlLike = EasyNetLiveChat.HtmlChatContenidoLikes(oContenidoBE.AllLikes);
-             strBE = strBE.Serialized(oContenidoBE).Replace(cmll, "'");
-             return '         <div class="chat-msg-text"  Data="' + strBE + '"  id="' + oContenidoBE.IdContenido + '" onclick="NetSuite.LiveChat.bubble.Click(this);"   >' + oContenidoBE.Texto + ((htmlLike == undefined) ? "" : htmlLike) + '</div>';
-         }
-         EasyNetLiveChat.HtmlChatContenidoLikes = function (AllMensajeContenidoLikes) {
-             var pos = 100;
-             var strHTMLLike = "";
-             if (AllMensajeContenidoLikes == null) { return ""; }
-             AllMensajeContenidoLikes.forEach(function (oMensajeContenidoLikesBE, i) {
-                 var _Likes = "+" + oMensajeContenidoLikesBE.NroLikes
-                 strHTMLLike += '<span class="badge1 rounded-pill text-danger"   style=" right: ' + pos + 'px">' + oMensajeContenidoLikesBE.NroLikes + '<img style="width:20px" src = "' + oMensajeContenidoLikesBE.Icono + '" /> </span>';
-                 pos = pos + 30;
-             });
-            return strHTMLLike;
-         }
-         */
 
          EasyNetLiveChat.Data.GuardarMensaje = function (oMensajeBE) {
              var ContactoFromBE = oMensajeBE.ContactoFrom;

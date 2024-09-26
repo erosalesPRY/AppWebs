@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EasyControlWeb;
+using EasyControlWeb.InterConeccion;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,7 +14,7 @@ namespace SIMANET_W22R.HelpDesk.ChatBot
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            int i = 0;
+            this.EasyAcFindContacto.DataInterconect.UrlWebService = EasyUtilitario.Helper.Configuracion.Leer(EasyUtilitario.Enumerados.Configuracion.SeccionKey.Nombre.ConfigBase, "PathBaseWSCore") + "HelpDesk/ChatBot/IChatBotManager.asmx";
         }
     }
 }

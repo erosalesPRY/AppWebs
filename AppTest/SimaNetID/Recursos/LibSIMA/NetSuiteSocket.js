@@ -2,12 +2,33 @@
 //Instancia el objeto 
 NetSuite.LiveChat = {};
 
-
 NetSuite.Manager = {};
 NetSuite.Manager.Infinity = {};
 NetSuite.Manager.Infinity.User = {};
 NetSuite.Manager.Infinity.User.Contectado = false;
 NetSuite.Manager.Infinity.InterfaceLoad = false;//Indica si la interface ID del chat esta cargado  y visible
+
+NetSuite.Manager.Broker = {};
+NetSuite.Manager.Broker.Persiana = {};
+NetSuite.Manager.Broker.Wind = "BrokerWind";
+NetSuite.Manager.Broker.WindContent = "BrokerContent";
+NetSuite.Manager.Broker.Persiana.Open = function (oLoadConfig) {
+    //Oculta la barra de usuarios
+    /*jNet.get("LblContact").css("display", "none");
+    jNet.get("LstContact").css("display", "none");*/
+    oLoadConfig.CtrlName = NetSuite.Manager.Broker.WindContent;
+    SIMA.Utilitario.Helper.LoadPageInCtrl(oLoadConfig);
+    jNet.get(NetSuite.Manager.Broker.Wind).css("width", "100%").css("left", "0");
+
+}
+NetSuite.Manager.Broker.Persiana.Close = function () {
+    //muestra la barra de usuarios
+    /*jNet.get("LblContact").css("display", "block");
+    jNet.get("LstContact").css("display", "block");*/
+    jNet.get(NetSuite.Manager.Broker.Wind).css("width", "0%").css("left", "100%");
+}
+
+
 NetSuite.Manager.Infinity.WorkingFrame = function () {
     NetSuite.LiveChat = new _NetSuite.Chat(SIMA.Utilitario.Helper.Configuracion.Leer("ConfigBase", "NetSuteSocket") + "platform=WebID" + "&App=SIMANetSuiteWeb&name=" + UsuarioBE.UserName + "&CodPer=" + UsuarioBE.CodPersonal + "&IdContac=" + UsuarioBE.IdContacto);
     NetSuite.LiveChat.LinkService = null;//Funcion que permite el enlace de la implementacion LibBroker
@@ -72,7 +93,7 @@ NetSuite.Manager.Infinity.WorkingFrame = function () {
         this.Foto = _Foto;
         this.IdMsg = _IdMsg;
     }
-    NetSuite.LiveChat.ContactBE = function (_IdContacto, _Foto, _Nombre, _Tipo, _IdMiembro, _Email, _CodPersonal) {
+    NetSuite.LiveChat.ContactBE = function (_IdContacto, _Foto, _Nombre, _Tipo, _IdMiembro, _Email, _CodPersonal, _IdEstado, _ColorEstado) {
         this.IdContacto = _IdContacto;
         this.Foto = _Foto;
         this.Nombre = _Nombre;
@@ -80,6 +101,9 @@ NetSuite.Manager.Infinity.WorkingFrame = function () {
         this.IdMiembro = _IdMiembro;
         this.Email = _Email;
         this.CodPersonal = _CodPersonal;
+        this.IdEstado = _IdEstado;
+        this.ColorEstado = _ColorEstado
+
     }
 
     NetSuite.LiveChat.MensajeBE = function (_ContactoFrom, _ContactoTo, _IdMsg, _MessageHTML, _ContenidoBE) {
@@ -204,15 +228,18 @@ NetSuite.Manager.Infinity.WorkingFrame = function () {
     NetSuite.LiveChat.onmessage = function (evt) {
         if (NetSuite.Manager.Infinity.InterfaceLoad == true) {
             var ObjectResult = evt.data.split('|');
-
+            //alert();
             switch (ObjectResult[0]) {
                 case "chatPaqueteBE"://Adicional que confirma que se ha conectado
                     //en el evento OPen se debe implementar el aviso a los demas contactos que esta conectado
+                    alert("Alguien se conecto");
+
                     break;
                 case "PaqueteBE":
                     var oPaqueteBE = ObjectResult[1].toString().SerializedToObject();
 
-                    if ((oPaqueteBE.IdContactoTo == UsuarioBE.IdContacto) && (oPaqueteBE.IdContactoFrom == oContactoDestinoBE.IdContacto)) {
+                    if (((oPaqueteBE.IdContactoTo == UsuarioBE.IdContacto) && (oPaqueteBE.IdContactoFrom == oContactoDestinoBE.IdContacto)) && (oPaqueteBE.IdContactoFrom != UsuarioBE.IdContacto)) {
+                       
                         EasyNetLiveChat.Data.LstMiembroGrupoSeleccionado(oPaqueteBE.IdContactoFrom).Rows.forEach(function (oDataRow, i) {
                             //Verificar si los usuarios estan conectados
                             var oContactBE = new NetSuite.LiveChat.ContactBE();
@@ -222,7 +249,7 @@ NetSuite.Manager.Infinity.WorkingFrame = function () {
                             oContactBE.Nombre = oDataRow.APELLIDOSYNOMBRES;
 
                             //if ((oContactBE.IdMiembro == oPaqueteBE.IdMiembro) ||(oContactBE.IdMiembro != oPaqueteBE.IdMiembro)) {
-                            if (oContactBE.IdMiembro == oPaqueteBE.IdMiembro) {
+                             if (oContactBE.IdMiembro == oPaqueteBE.IdMiembro) {
                                 var oMensajeBE = new NetSuite.LiveChat.MensajeBE();
                                 oMensajeBE.ContactoFrom = oContactBE;
                                 oMensajeBE.IdMsg = oPaqueteBE.IdMsg;
@@ -272,7 +299,9 @@ NetSuite.Manager.Infinity.WorkingFrame = function () {
 
                           
                  break;
-
+                case "chatCloseContact":
+                    alert('Alguien salio del chat');
+                    break;
             }
         }
 

@@ -42,6 +42,8 @@ namespace SIMANET_W22R.GestiondeCalidad
                     /*   LogAplicativo.GrabarLogAplicativoArchivo(new LogAplicativo(CNetAccessControl.GetUserName(), "Secretaria - Directorio", this.ToString(), "Se consultó las Actas de Sesión de Directorio.", Enumerados.NivelesErrorLog.I.ToString()));
                     */
                     //this.LlenarGrilla(EasyGestorFiltro1.getFilterString());
+
+                    ConfigurarFiltroPorDefault();
                     this.LlenarGrilla("");
 
                 }
@@ -53,6 +55,26 @@ namespace SIMANET_W22R.GestiondeCalidad
 
         }
 
+        void ConfigurarFiltroPorDefault() {
+            List<EasyFiltroItem> lFItem = new List<EasyFiltroItem>();
+            EasyFiltroItem oItem = new EasyFiltroItem();
+            oItem.Campo = "IdUsuarioRegistro";
+            oItem.CampoDescripcion = "Inspector";
+            oItem.Criterio = "LIKE@*[VALOR]*@";
+            oItem.CriterioDescripcion = "Contenga";
+            oItem.Definitivo = true;
+            oItem.Id = "1";
+            oItem.IdPadre = "0";
+            //oItem.NroHijos = 0;
+            oItem.Operador = " ";
+            // oItem.TemplateType = "EasyITemplateAutoCompletar";
+            oItem.TextField = "ROSALES AZABACHE EDDY JOSE";
+            oItem.ValueField = "86";
+            oItem.TipodeDatos = EasyUtilitario.Enumerados.TiposdeDatos.String;
+
+            lFItem.Add(oItem);
+            EasyGestorFiltro1.setCollectionCriterios(lFItem);
+        }
 
         protected void EasyGestorFiltro1_ProcessCompleted(string FiltroResultante, List<EasyFiltroItem> lstEasyFiltroItem)
         {

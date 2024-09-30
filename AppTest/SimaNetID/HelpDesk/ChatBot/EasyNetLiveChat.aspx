@@ -239,7 +239,13 @@
          EasyNetLiveChat.Panel = {};
          EasyNetLiveChat.Panel.Header = function () {return jNet.get('ChatHeader');}
          EasyNetLiveChat.Panel.Contactos = {};
-         EasyNetLiveChat.Panel.Contactos.Right = function(){return jNet.get('LstContact');}
+         EasyNetLiveChat.Panel.Contactos.Right = function () {
+             var obj = jNet.get('LstContact');
+             return obj;
+         }
+        
+
+
          EasyNetLiveChat.Panel.Contactos.Left = function () { return jNet.get('LblContact'); }
          EasyNetLiveChat.Panel.Body = function () { return jNet.get('ContentChat'); }
          EasyNetLiveChat.Panel.Footer = function () { return jNet.get('ChatFooter'); }
@@ -395,15 +401,13 @@
                      EasyNetLiveChat.Render.MiembrosdeGrupoSeleccionado(oContactoDestinoBE);
                  }
                  //Actualiza Estado
-                 var ContactosBE = [].slice.call(EasyNetLiveChat.Panel.Contactos.Right().children);
+                var ContactosBE = [].slice.call(EasyNetLiveChat.Panel.Contactos.Right().children);
                  ContactosBE.forEach(function (CtrlContacto) {
                      var oImgContacto = CtrlContacto.children[0];
                      var oContactoBE = jNet.get(oImgContacto).attr("Data").toString().SerializedToObject();
                      var oHtmlStatus = jNet.get(CtrlContacto.children[1]);
                      oHtmlStatus.css('background-color', oContactoBE.ColorEstado);
                  });
-
-
                  EasyNetLiveChat.Render.ChatHistoryDialogo(UsuarioBE.IdContacto, oContactoDestinoBE.IdContacto);
              });
              
@@ -418,11 +422,11 @@
              var ContactSendBE = new NetSuite.LiveChat.ContactBE();
                  ContactSendBE.IdContacto = oDR.ID_CONTACT_ORG;
                  ContactSendBE.Nombre = oDR.NOMBRECONTACTO;
-
-
+                 ContactSendBE.CodPersonal = oDR.IDPERSONAL;
                  ContactSendBE.Foto = EasyNetLiveChat.FotoContacto(oDR.NRODOCUMENTO);
                  ContactSendBE.EMail = oDR.EMAIL;
-                 //Verificar si los usuarios estan conectados
+                 ContactSendBE.ColorEstado = oDR.COLORESTADO;
+                 //Verificar realsi los usuarios estan conectados
                  EasyNetLiveChat.Panel.Contactos.Right().innerHTML += EasyNetLiveChat.ITemplateLstUsuarioContacto(EasyNetLiveChat.Enum.Modalidad.ContactDestino, ContactSendBE);
                     Cant = i;
                 });

@@ -47,10 +47,29 @@
 
 
     </style>
+
+    <script>
+
+        function fullscreen() {
+            if (window.location.search.indexOf("realwindow") == -1) {
+                Vieja0 = window.self;
+                Vieja0.opener = window.self;
+                Ancho = screen.availWidth;
+                Alto = screen.availHeight;
+                Dir = window.location + "?realwindow=1";
+                Nueva0 = window.open(Dir, '','toolbar=no,location=no,directories=no,status=no,menubar=no,' 
+                    + 'scrollbars=1,resizable=no,copyhistory=1,channelmode=1,fullscreen=1 ,width=' + Ancho + ',' 
+                                            + 'height=' + Alto + ',top=0,left=0', 'replace');
+                Vieja0.close();
+                
+            }
+        
+        }
+    </script>
    
 
 </head>
-<body class="FondoLog" onkeypress="if(event.keyCode==13){EasyLoginCard1_ctl19_ToolBar_Onclick({Id:'btnLogin',Texto:'Aceptar',Descripcion:'',Icono:'',RunAtServer:'True',ClassName:'btn btn-primary',Ubicacion:'Izquierda'});}">
+<body onload="fullscreen();" class="FondoLog" onkeypress="if(event.keyCode==13){EasyLoginCard1_ctl19_ToolBar_Onclick({Id:'btnLogin',Texto:'Aceptar',Descripcion:'',Icono:'',RunAtServer:'True',ClassName:'btn btn-primary',Ubicacion:'Izquierda'});}">
     <form id="form1" runat="server">
         <cc1:EasyLoginCard ID="EasyLoginCard1" runat="server" AutenticacionWindows="False" CadenaLDAP="LDAP://simaperu.com.pe" CssClass="padre" ImagenLogo="Recursos/img/escudo.gif" OnValidacion="EasyLoginCard1_Validacion" ></cc1:EasyLoginCard>
            
@@ -114,6 +133,9 @@
                 //alert('Mayusculas desactivada');
             }
         }
+
+        //amximiza la ventana
+
 
     </script>
 </body>

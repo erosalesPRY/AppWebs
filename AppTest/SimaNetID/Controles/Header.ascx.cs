@@ -294,6 +294,8 @@ namespace SIMANET_W22R.Controles
                                                   alert('yes');
                                                 }
                                                 window.onbeforeunload = function(evt){
+                                                    alert();
+
                                                         if(window.ClosePorApp){
                                                             NetSuite.LiveChat.close();//Cierra la conexion con el Listener NetSuiteWebSocket
                                                         }

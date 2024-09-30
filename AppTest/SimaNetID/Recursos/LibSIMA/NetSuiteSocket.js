@@ -86,12 +86,13 @@ NetSuite.Manager.Infinity.WorkingFrame = function () {
     }
 
     //NetSuite.LiveChat.WindPopupInterface = jNet.get(document.getElementsByName('EasyPopupLiveChat')[0]);
-    NetSuite.LiveChat.PaqueteBE = function (_IdContactoFrom, _IdCOntactoTo, _IdMiembro,_Foto, _IdMsg) {
+    NetSuite.LiveChat.PaqueteBE = function (_IdContactoFrom, _IdCOntactoTo, _IdMiembro, _Foto, _IdMsg, _CodAux) {
         this.IdContactoFrom = _IdContactoFrom;
         this.IdContactoTo = _IdCOntactoTo;
         this.IdMiembro = _IdMiembro;
         this.Foto = _Foto;
         this.IdMsg = _IdMsg;
+        this.CodAux = _CodAux;
     }
     NetSuite.LiveChat.ContactBE = function (_IdContacto, _Foto, _Nombre, _Tipo, _IdMiembro, _Email, _CodPersonal, _IdEstado, _ColorEstado) {
         this.IdContacto = _IdContacto;
@@ -224,6 +225,17 @@ NetSuite.Manager.Infinity.WorkingFrame = function () {
         //Icono creado en el header para el control EasyNavigatorBarIconBE
        // jNet.get(document.getElementsByName('_Infinity')[0]).css("display", "none");//Icono en las opciones del usuario 
     };
+    NetSuite.LiveChat.MiembrosGrupo = {};
+    NetSuite.LiveChat.MiembrosGrupo.Estado = function (CodigoPersonal,ColorEsatdo) {
+        var MiembroGrupoBE = [].slice.call(EasyNetLiveChat.Panel.Contactos.Right().children);
+        MiembroGrupoBE.forEach(function (CtrlContacto) {
+            var oImgContacto = CtrlContacto.children[0];
+            var oContactoBE = jNet.get(oImgContacto).attr("Data").toString().SerializedToObject();
+            if (oContactoBE.CodPersonal == CodigoPersonal) {
+                jNet.get(CtrlContacto.children[1]).css('background-color', ColorEsatdo);
+            }
+        });
+    }
 
     NetSuite.LiveChat.onmessage = function (evt) {
         if (NetSuite.Manager.Infinity.InterfaceLoad == true) {
@@ -231,9 +243,10 @@ NetSuite.Manager.Infinity.WorkingFrame = function () {
             //alert();
             switch (ObjectResult[0]) {
                 case "chatPaqueteBE"://Adicional que confirma que se ha conectado
-                    //en el evento OPen se debe implementar el aviso a los demas contactos que esta conectado
-                    alert("Alguien se conecto");
-
+                    var oPaqueteBE = ObjectResult[1].toString().SerializedToObject();
+                    if (oContactoDestinoBE != null) { 
+                        NetSuite.LiveChat.MiembrosGrupo.Estado(oPaqueteBE.codPersonal,"green");
+                    }
                     break;
                 case "PaqueteBE":
                     var oPaqueteBE = ObjectResult[1].toString().SerializedToObject();
@@ -300,7 +313,10 @@ NetSuite.Manager.Infinity.WorkingFrame = function () {
                           
                  break;
                 case "chatCloseContact":
-                    alert('Alguien salio del chat');
+                    var oPaqueteBE = ObjectResult[1].toString().SerializedToObject();
+                    if (oContactoDestinoBE != null) {
+                        NetSuite.LiveChat.MiembrosGrupo.Estado(oPaqueteBE.codPersonal, "red");
+                    }
                     break;
             }
         }
